@@ -11,7 +11,6 @@ import './style.css'
     t.body.innerHTML = '<h1>This website was made for desktop experience</h1>'
     return
   }
-  const LERP = 0.1
   const d = document
   const B = d.querySelector('.box__wrapper')!
   const M = B.querySelector('.magnet__item')! as HTMLElement
