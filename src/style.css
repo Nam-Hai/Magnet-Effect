@@ -5,6 +5,23 @@
   box-sizing: border-box;
 }
 
+header {
+  position: absolute;
+  top: 0;
+  left: 0
+}
+header a {
+  margin: 2rem;
+  height: 4rem;
+  width: 4rem;
+  display: block;
+  transition: transform 200ms;
+}
+
+a:hover {
+  transform: scale(1.1);
+}
+
 body {
   position: absolute;
   top: 0;
@@ -16,6 +33,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 .box__wrapper {
   height: 20rem;
