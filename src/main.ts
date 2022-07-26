@@ -13,7 +13,8 @@ import './style.css'
   }
   const d = document
   const B = d.querySelector('.box__wrapper')!
-  const M = B.querySelector('.magnet__item')! as HTMLElement
+  const M = B.querySelector('.magnet__item-1')! as HTMLElement
+  const N = B.querySelector('.magnet__item-2')! as HTMLElement
   const bounds = B.getBoundingClientRect()
 
   let x = {
@@ -44,19 +45,41 @@ import './style.css'
 
   const update = () => {
 
-    if (Math.abs(mouse.x) - bounds.width / 2 < 0 && Math.abs(mouse.y) - bounds.height / 2 < 0) {
-      x.target = mouse.x
-      y.target = mouse.y
+    x.target = mouse.x
+    y.target = mouse.y
+
+    let T = x.target ** 2 + y.target ** 2
+    T = Math.sqrt(T)
+    if (T < 300) {
+
+      x.current = lerp(0.08, x.current, x.target * 0.15)
+      y.current = lerp(0.08, y.current, y.target * 0.15)
 
     } else {
-      x.target = lerp(0.1, x.target, 0.1 * mouse.x)
-      y.target = lerp(0.1, y.target, 0.1 * mouse.y)
+      let R = x.current ** 2 + y.current ** 2
+      R = Math.sqrt(R)
+
+      let cX = lerp(0.08, x.current, x.target * 0.15)
+      let cY = lerp(0.08, y.current, y.target * 0.15)
+
+      // R = Math.sqrt(R)
+      let theta = 0
+      if (cX != 0) {
+        let a = cY / cX
+        theta = Math.atan(a)
+      }
+      if (cX < 0)
+        theta += Math.PI
+      let newR = lerp(0.05, R, 0)
+
+      x.current = newR * Math.cos(theta)
+      y.current = newR * Math.sin(theta)
     }
-    x.current = lerp(0.08, x.current, x.target * 0.7)
-    y.current = lerp(0.08, y.current, y.target * 0.7)
 
 
     M.style.transform = `translate( ${x.current}px , ${y.current}px )`
+
+    N.style.transform = `translate( ${-x.current}px , ${-y.current}px )`
 
     requestAnimationFrame(update)
 
